@@ -111,6 +111,8 @@ public class CRUDBomberos {
                     limpiarTextfiel();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
+                } catch (Exception ex){
+                    JOptionPane.showMessageDialog(null,"Debe seleccionar antes un bombero para darlo de baja");
                 }
             }
         });

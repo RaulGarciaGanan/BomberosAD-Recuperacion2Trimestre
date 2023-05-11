@@ -64,8 +64,8 @@ public class Main {
         JMenuItem gestionParque = new JMenuItem("Gestion de Parque");
 
         //pestaña ayuda
-        JMenuItem acercaDe = new JMenuItem("Acerca de");
-        JMenuItem manual = new JMenu("Descargar manual");
+        JMenuItem acercaDe = new JMenuItem("Acerca del autor");
+        JMenuItem manual = new JMenuItem("Descargar manual");
 
         consultaBomberos.add(porCodigoB);
         consultaBomberos.add(porNombre);
@@ -244,6 +244,20 @@ public class Main {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+        acercaDe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                Autor autor = null;
+                try {
+                    autor = new Autor();
+                    autor.frame.setVisible(true);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
             }
         });
     }

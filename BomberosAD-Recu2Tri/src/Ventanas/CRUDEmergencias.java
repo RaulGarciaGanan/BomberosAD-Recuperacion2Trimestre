@@ -85,12 +85,16 @@ public class CRUDEmergencias {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Emergencia em = new Emergencia(tfCodigo.getText(), tfUbicacion.getText(), tfCiudad.getText(), tfTipo.getText(), tfEstado.getText(), tfNivel.getText(), false);
-                    modeloemergencia.addElement(em);
-                    gestion.insertarEmergencia(em);
-                    m.emergencias.clear();
-                    gestion.cargarEmergencias(m.emergencias);
-                    limpiarTextfiel();
+                    if (tfCodigo.getText().isEmpty() || tfUbicacion.getText().isEmpty() || tfCiudad.getText().isEmpty() || tfTipo.getText().isEmpty() || tfEstado.getText().isEmpty() || tfNivel.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Ningun campo puede estar vacio");
+                    } else {
+                        Emergencia em = new Emergencia(tfCodigo.getText(), tfUbicacion.getText(), tfCiudad.getText(), tfTipo.getText(), tfEstado.getText(), tfNivel.getText(), false);
+                        modeloemergencia.addElement(em);
+                        gestion.insertarEmergencia(em);
+                        m.emergencias.clear();
+                        gestion.cargarEmergencias(m.emergencias);
+                        limpiarTextfiel();
+                    }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -101,13 +105,15 @@ public class CRUDEmergencias {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Emergencia em = new Emergencia(tfCodigo.getText());
-                    modeloemergencia.addElement(em);
                     gestion.bajaEmergencia(em);
                     m.emergencias.clear();
                     gestion.cargarEmergencias(m.emergencias);
+                    modeloemergencia.removeElementAt(lEmergencias.getSelectedIndex());
                     limpiarTextfiel();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar antes un bombero para darlo de baja");
                 }
             }
         });
@@ -115,12 +121,16 @@ public class CRUDEmergencias {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Emergencia em = new Emergencia(tfCodigo.getText(), tfUbicacion.getText(), tfCiudad.getText(), tfTipo.getText(), tfEstado.getText(), tfNivel.getText());
-                    gestion.modificarEmergencia(em);
-                    m.emergencias.clear();
-                    gestion.cargarEmergencias(m.emergencias);
-                    modeloemergencia.removeElementAt(lEmergencias.getSelectedIndex());
-                    limpiarTextfiel();
+                    if (tfCodigo.getText().isEmpty() || tfUbicacion.getText().isEmpty() || tfCiudad.getText().isEmpty() || tfTipo.getText().isEmpty() || tfEstado.getText().isEmpty() || tfNivel.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Ningun campo puede estar vacio");
+                    } else {
+                        Emergencia em = new Emergencia(tfCodigo.getText(), tfUbicacion.getText(), tfCiudad.getText(), tfTipo.getText(), tfEstado.getText(), tfNivel.getText());
+                        gestion.modificarEmergencia(em);
+                        m.emergencias.clear();
+                        gestion.cargarEmergencias(m.emergencias);
+                        modeloemergencia.removeElementAt(lEmergencias.getSelectedIndex());
+                        limpiarTextfiel();
+                    }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }

@@ -14,7 +14,7 @@ CREATE TABLE `emergencias` (
   `ubicacion` varchar(40) NOT NULL,
   `ciudad` varchar(40) NOT NULL,
   `tipo` varchar(40) NOT NULL,
-  `estao_actual` varchar(40) NOT NULL,
+  `estado_actual` varchar(40) NOT NULL,
   `nivel_gravedad` varchar(40) NOT NULL,
   `baja` tinyint NOT NULL,
   PRIMARY KEY (`codigo`)
@@ -36,7 +36,7 @@ CREATE TABLE `gestionparque` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `vehiculos` (
-  `codio` varchar(6) NOT NULL,
+  `codigo` varchar(6) NOT NULL,
   `matricula` varchar(10) DEFAULT NULL,
   `tipo` varchar(20) NOT NULL,
   `modelo` varchar(20) DEFAULT NULL,

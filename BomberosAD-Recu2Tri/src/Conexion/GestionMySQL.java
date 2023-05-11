@@ -1,14 +1,21 @@
 package Conexion;
 
-import Clases.*;
-import Ventanas.*;
+import Clases.Bombero;
+import Clases.Emergencia;
+import Clases.Vehiculo;
+import Clases.gestionParque;
+import Ventanas.GestionParque;
+import Ventanas.Main;
 
 import javax.swing.*;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class GestionMySQL {
-    public GestionParque gp ;
+    public GestionParque gp;
 
     public Main m;
 
@@ -138,10 +145,11 @@ public class GestionMySQL {
         Statement miSentencia = miConexion.createStatement();
 
         ResultSet miResultSet = miSentencia.executeQuery("SELECT * FROM vehiculos where codigo='" + codigo + "'");
-        while (miResultSet.next()) {
-            Vehiculo v;
-            v = new Vehiculo(miResultSet.getString(1), miResultSet.getString(2), miResultSet.getString(3), miResultSet.getString(4), miResultSet.getString(5), miResultSet.getBoolean(6));
+        if (miResultSet.next()) {
+            Vehiculo v = new Vehiculo(miResultSet.getString(1), miResultSet.getString(2), miResultSet.getString(3), miResultSet.getString(4), miResultSet.getString(5), miResultSet.getBoolean(6));
             vehiculos.add(v);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha encontrado resultados");
         }
         miConexion.close();
     }
@@ -151,9 +159,11 @@ public class GestionMySQL {
         Statement miSentencia = miConexion.createStatement();
 
         ResultSet miResultSet = miSentencia.executeQuery("SELECT * FROM vehiculos where matricula='" + matricula + "'");
-        while (miResultSet.next()) {
+        if (miResultSet.next()) {
             Vehiculo v = new Vehiculo(miResultSet.getString(1), miResultSet.getString(2), miResultSet.getString(3), miResultSet.getString(4), miResultSet.getString(5), miResultSet.getBoolean(6));
             vehiculos.add(v);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha encontrado resultados");
         }
         miConexion.close();
     }
@@ -163,10 +173,14 @@ public class GestionMySQL {
         Statement miSentencia = miConexion.createStatement();
 
         ResultSet miResultSet = miSentencia.executeQuery("SELECT * FROM bomberos where codigo='" + codigo + "'");
-        while (miResultSet.next()) {
+        if (miResultSet.next()) {
             Bombero b = new Bombero(miResultSet.getString(1), miResultSet.getString(2), miResultSet.getString(3), miResultSet.getInt(4), miResultSet.getString(5), miResultSet.getString(6), miResultSet.getBoolean(7));
             bomberos.add(b);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha encontrado resultados");
         }
+
         miConexion.close();
     }
 
@@ -175,9 +189,12 @@ public class GestionMySQL {
         Statement miSentencia = miConexion.createStatement();
 
         ResultSet miResultSet = miSentencia.executeQuery("SELECT * FROM bomberos where nombre='" + nombre + "'");
-        while (miResultSet.next()) {
+        if (miResultSet.next()) {
             Bombero b = new Bombero(miResultSet.getString(1), miResultSet.getString(2), miResultSet.getString(3), miResultSet.getInt(4), miResultSet.getString(5), miResultSet.getString(6), miResultSet.getBoolean(7));
             bomberos.add(b);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha encontrado resultados");
         }
         miConexion.close();
     }
@@ -187,9 +204,11 @@ public class GestionMySQL {
         Statement miSentencia = miConexion.createStatement();
 
         ResultSet miResultSet = miSentencia.executeQuery("SELECT * FROM emergencias where ubicacion='" + ubicacion + "'");
-        while (miResultSet.next()) {
+        if (miResultSet.next()) {
             Emergencia em = new Emergencia(miResultSet.getString(1), miResultSet.getString(2), miResultSet.getString(3), miResultSet.getString(4), miResultSet.getString(5), miResultSet.getString(6), miResultSet.getBoolean(7));
             emergencias.add(em);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha encontrado resultados");
         }
         miConexion.close();
     }
@@ -199,12 +218,15 @@ public class GestionMySQL {
         Statement miSentencia = miConexion.createStatement();
 
         ResultSet miResultSet = miSentencia.executeQuery("SELECT * FROM emergencias where estado_actual='" + estado + "'");
-        while (miResultSet.next()) {
+        if (miResultSet.next()) {
             Emergencia em = new Emergencia(miResultSet.getString(1), miResultSet.getString(2), miResultSet.getString(3), miResultSet.getString(4), miResultSet.getString(5), miResultSet.getString(6), miResultSet.getBoolean(7));
             emergencias.add(em);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha encontrado resultados");
         }
         miConexion.close();
     }
+
     public void cargarBomberos(ArrayList<Bombero> bomberos) throws SQLException {
         Connection miConexion = new ConexionMySQL().conectorMySQL();
         Statement miSentencia = miConexion.createStatement();

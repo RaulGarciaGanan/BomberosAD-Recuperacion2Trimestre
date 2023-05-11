@@ -40,7 +40,7 @@ public class CRUDVehiculos {
         m = new Main();
         m.frame.setVisible(false);
 
-        frame = new JFrame("crudBomberos");
+        frame = new JFrame("crudvehiculos");
         frame.setContentPane(panel1);
 
         frame.setSize(1000, 500);
@@ -83,12 +83,16 @@ public class CRUDVehiculos {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Vehiculo v = new Vehiculo(tfCodigo.getText(), tfMatricula.getText(), tfTipo.getText(), tfModelo.getText(), tfDisponibilidad.getText(), false);
-                    modelVehiculo.addElement(v);
-                    gestion.insertarVehiculo(v);
-                    m.vehiculos.clear();
-                    gestion.cargarVehiculos(m.vehiculos);
-                    limpiarTextfiel();
+                    if (tfCodigo.getText().isEmpty() || tfMatricula.getText().isEmpty() || tfTipo.getText().isEmpty() || tfModelo.getText().isEmpty() || tfDisponibilidad.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Ningun campo puede estar vacio");
+                    } else {
+                        Vehiculo v = new Vehiculo(tfCodigo.getText(), tfMatricula.getText(), tfTipo.getText(), tfModelo.getText(), tfDisponibilidad.getText(), false);
+                        modelVehiculo.addElement(v);
+                        gestion.insertarVehiculo(v);
+                        m.vehiculos.clear();
+                        gestion.cargarVehiculos(m.vehiculos);
+                        limpiarTextfiel();
+                    }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -106,6 +110,8 @@ public class CRUDVehiculos {
                     limpiarTextfiel();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar antes un bombero para darlo de baja");
                 }
             }
         });
@@ -113,11 +119,15 @@ public class CRUDVehiculos {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Vehiculo v = new Vehiculo(tfCodigo.getText(), tfMatricula.getText(), tfTipo.getText(), tfModelo.getText(), tfDisponibilidad.getText(), false);
-                    gestion.modificarVehiculo(v);
-                    m.vehiculos.clear();
-                    gestion.cargarVehiculos(m.vehiculos);
-                    limpiarTextfiel();
+                    if (tfCodigo.getText().isEmpty() || tfMatricula.getText().isEmpty() || tfTipo.getText().isEmpty() || tfModelo.getText().isEmpty() || tfDisponibilidad.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Ningun campo puede estar vacio");
+                    } else {
+                        Vehiculo v = new Vehiculo(tfCodigo.getText(), tfMatricula.getText(), tfTipo.getText(), tfModelo.getText(), tfDisponibilidad.getText(), false);
+                        gestion.modificarVehiculo(v);
+                        m.vehiculos.clear();
+                        gestion.cargarVehiculos(m.vehiculos);
+                        limpiarTextfiel();
+                    }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
